@@ -31,7 +31,7 @@ export default function AddCategoryPage() {
         slug: "",
         originalPrice: "",
         salePrice: "",
-        discount: "",
+        discount: 0,
         shortDescription: "",
         description: "",
         material: "",
@@ -111,7 +111,7 @@ export default function AddCategoryPage() {
 
                 setFormData({
                     roomId: "", categoryId: "", name: "", slug: "",
-                    originalPrice: "", salePrice: "", discount: "",
+                    originalPrice: "", salePrice: "", discount: 0,
                     shortDescription: "", description: "", material: "",
                     color: "", width: "", height: "", depth: "", weight: "",
                     seoTitle: "", seoDescription: "", image: null
@@ -160,22 +160,12 @@ export default function AddCategoryPage() {
             salePrice >= 0 &&
             salePrice <= originalPrice
         ) {
-
             const discount = Math.round(
                 ((originalPrice - salePrice) / originalPrice) * 100
             );
-
-            setFormData(prev => ({
-                ...prev,
-                discount
-            }));
-        }
-        else {
-
-            setFormData(prev => ({
-                ...prev,
-                discount: ""
-            }));
+            setFormData(prev => ({ ...prev, discount }));
+        } else {
+            setFormData(prev => ({ ...prev, discount: 0 }));
         }
 
     }, [formData.originalPrice, formData.salePrice]);
@@ -244,6 +234,7 @@ export default function AddCategoryPage() {
                             </label>
 
                             <Select
+                                instanceId="select-room"
                                 options={rooms.map(room => ({
                                     value: room._id,
                                     label: room.name
@@ -263,6 +254,7 @@ export default function AddCategoryPage() {
                             </label>
 
                             <Select
+                                instanceId="select-category"
                                 options={categories.map(category => ({
                                     value: category._id,
                                     label: category.name
@@ -280,6 +272,7 @@ export default function AddCategoryPage() {
                                 Color
                             </label>
                             <Select
+                                instanceId="select-color"
                                 options={colors.map(c => ({
                                     value: c.name,
                                     label: (
@@ -304,131 +297,165 @@ export default function AddCategoryPage() {
                     </div>
                     <div className="grid md:grid-cols-3 gap-5">
 
-                        <input
-                            type="number"
-                            name="originalPrice"
-                            placeholder="Original Price"
-                            value={formData.originalPrice}
-                            onChange={handleChange}
-                            className="border rounded-xl px-4 py-3"
-                        />
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-semibold text-[#2a3460]">Original Price *</label>
+                            <input
+                                type="number"
+                                name="originalPrice"
+                                placeholder="e.g. 15000"
+                                value={formData.originalPrice}
+                                onChange={handleChange}
+                                className="border rounded-xl px-4 py-3"
+                            />
+                        </div>
 
-                        <input
-                            type="number"
-                            name="salePrice"
-                            placeholder="Sale Price"
-                            value={formData.salePrice}
-                            onChange={handleChange}
-                            className="border rounded-xl px-4 py-3"
-                        />
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-semibold text-[#2a3460]">Sale Price *</label>
+                            <input
+                                type="number"
+                                name="salePrice"
+                                placeholder="e.g. 12000"
+                                value={formData.salePrice}
+                                onChange={handleChange}
+                                className="border rounded-xl px-4 py-3"
+                            />
+                        </div>
 
-                        <input
-                            type="number"
-                            name="discount"
-                            placeholder="Discount %"
-                            value={formData.discount}
-                            onChange={handleChange}
-                            className="border rounded-xl px-4 py-3"
-                        />
-
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-5">
-
-                        <input
-                            type="text"
-                            name="material"
-                            placeholder="Material"
-                            value={formData.material}
-                            onChange={handleChange}
-                            className="border rounded-xl px-4 py-3"
-                        />
-                        <input
-                            type="number"
-                            name="weight"
-                            placeholder="Weight (KG)"
-                            value={formData.weight}
-                            onChange={handleChange}
-                            className="border rounded-xl px-4 py-3"
-                        />
-
-                    </div>
-                    <div className="grid md:grid-cols-3 gap-5">
-
-                        <input
-                            type="number"
-                            name="width"
-                            placeholder="Width"
-                            value={formData.width}
-                            onChange={handleChange}
-                            className="border rounded-xl px-4 py-3"
-                        />
-
-                        <input
-                            type="number"
-                            name="height"
-                            placeholder="Height"
-                            value={formData.height}
-                            onChange={handleChange}
-                            className="border rounded-xl px-4 py-3"
-                        />
-
-                        <input
-                            type="number"
-                            name="depth"
-                            placeholder="Depth"
-                            value={formData.depth}
-                            onChange={handleChange}
-                            className="border rounded-xl px-4 py-3"
-                        />
-
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-5">
-
-                        <textarea
-                            name="shortDescription"
-                            placeholder="Short Description"
-                            value={formData.shortDescription}
-                            onChange={handleChange}
-                            rows={5}
-                            className="border rounded-xl col-span-full px-4 py-3"
-                        />
-
-
-
-
-
-                        <div className="border rounded-xl col-span-full px-4 py-3 ">
-                            <Editor value={formData.description} onTextChange={(e) => {
-                                setFormData(prev => ({
-                                    ...prev,
-                                    description: e.htmlValue
-                                }))
-                            }}
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-semibold text-[#2a3460]">Discount %</label>
+                            <input
+                                type="number"
+                                name="discount"
+                                placeholder="Auto calculated"
+                                value={formData.discount}
+                                onChange={handleChange}
+                                className="border rounded-xl px-4 py-3 bg-gray-50"
                             />
                         </div>
 
                     </div>
                     <div className="grid md:grid-cols-2 gap-5">
 
-                        <input
-                            type="text"
-                            name="seoTitle"
-                            placeholder="SEO Title"
-                            value={formData.seoTitle}
-                            onChange={handleChange}
-                            className="border rounded-xl px-4 py-3"
-                        />
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-semibold text-[#2a3460]">Material</label>
+                            <input
+                                type="text"
+                                name="material"
+                                placeholder="e.g. Solid Wood, MDF"
+                                value={formData.material}
+                                onChange={handleChange}
+                                className="border rounded-xl px-4 py-3"
+                            />
+                        </div>
 
-                        <textarea
-                            name="seoDescription"
-                            placeholder="SEO Description"
-                            value={formData.seoDescription}
-                            onChange={handleChange}
-                            rows={3}
-                            className="border rounded-xl px-4 py-3"
-                        />
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-semibold text-[#2a3460]">Weight (KG)</label>
+                            <input
+                                type="number"
+                                name="weight"
+                                placeholder="e.g. 12.5"
+                                value={formData.weight}
+                                onChange={handleChange}
+                                className="border rounded-xl px-4 py-3"
+                            />
+                        </div>
 
                     </div>
+                    <div className="grid md:grid-cols-3 gap-5">
+
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-semibold text-[#2a3460]">Width (cm)</label>
+                            <input
+                                type="number"
+                                name="width"
+                                placeholder="e.g. 120"
+                                value={formData.width}
+                                onChange={handleChange}
+                                className="border rounded-xl px-4 py-3"
+                            />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-semibold text-[#2a3460]">Height (cm)</label>
+                            <input
+                                type="number"
+                                name="height"
+                                placeholder="e.g. 80"
+                                value={formData.height}
+                                onChange={handleChange}
+                                className="border rounded-xl px-4 py-3"
+                            />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-semibold text-[#2a3460]">Depth (cm)</label>
+                            <input
+                                type="number"
+                                name="depth"
+                                placeholder="e.g. 60"
+                                value={formData.depth}
+                                onChange={handleChange}
+                                className="border rounded-xl px-4 py-3"
+                            />
+                        </div>
+
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-5">
+
+                        <div className="flex flex-col gap-1.5 col-span-full">
+                            <label className="text-xs font-semibold text-[#2a3460]">Short Description</label>
+                            <textarea
+                                name="shortDescription"
+                                placeholder="Brief product description..."
+                                value={formData.shortDescription}
+                                onChange={handleChange}
+                                rows={5}
+                                className="border rounded-xl px-4 py-3"
+                            />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5 col-span-full">
+                            <label className="text-xs font-semibold text-[#2a3460]">Full Description</label>
+                            <div className="border rounded-xl col-span-full px-4 py-3">
+                                <Editor value={formData.description} onTextChange={(e) => {
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        description: e.htmlValue
+                                    }))
+                                }}
+                                />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-5">
+
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-semibold text-[#2a3460]">SEO Title</label>
+                            <input
+                                type="text"
+                                name="seoTitle"
+                                placeholder="SEO Title"
+                                value={formData.seoTitle}
+                                onChange={handleChange}
+                                className="border rounded-xl px-4 py-3"
+                            />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-semibold text-[#2a3460]">SEO Description</label>
+                            <textarea
+                                name="seoDescription"
+                                placeholder="SEO Description"
+                                value={formData.seoDescription}
+                                onChange={handleChange}
+                                rows={3}
+                                className="border rounded-xl px-4 py-3"
+                            />
+                        </div>
+
+                    </div>
+
 
 
 

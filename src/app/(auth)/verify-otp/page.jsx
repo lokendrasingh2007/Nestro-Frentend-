@@ -73,7 +73,7 @@ export default function VerifyOtpPage() {
       const response = await client.post("user/verify-otp", { email, otp: otpValue });
       if (response.data.success) {
         toast.success("Email verified successfully!");
-        router.push("/"); // redirect after success
+        router.push("/login"); // redirect after success
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Invalid OTP");

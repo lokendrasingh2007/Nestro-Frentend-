@@ -91,8 +91,8 @@ export default function AdminUsersPage() {
     };
 
     const roleColor = (role) => {
-        if (role === "super_admin") return "bg-purple-100 text-purple-700";
-        if (role === "admin")       return "bg-blue-100 text-blue-700";
+        if (role === "superadmin") return "bg-[#862748]/10 text-[#862748]";
+        if (role === "admin")      return "bg-blue-100 text-blue-700";
         return "bg-gray-100 text-gray-600";
     };
 
@@ -152,7 +152,7 @@ export default function AdminUsersPage() {
                                     className="w-full border-[1.5px] border-[#c3c9e3] rounded-xl px-4 py-2.5 text-sm text-[#3a3f5c] outline-none focus:border-[#3b497e] bg-white cursor-pointer"
                                     disabled={submitting}>
                                     <option value="admin">Admin</option>
-                                    <option value="super_admin">Super Admin</option>
+                                    <option value="superadmin">Super Admin</option>
                                 </select>
                             </div>
                         </div>
@@ -202,7 +202,7 @@ export default function AdminUsersPage() {
                                         <td className="px-5 py-3 text-gray-600">{u.mobile || "—"}</td>
                                         <td className="px-5 py-3">
                                             <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${roleColor(u.role)}`}>
-                                                {u.role === "super_admin" ? "Super Admin" : u.role === "admin" ? "Admin" : "User"}
+                                                {u.role === "superadmin" ? "Super Admin" : u.role === "admin" ? "Admin" : u.role}
                                             </span>
                                         </td>
                                         <td className="px-5 py-3">
@@ -279,7 +279,7 @@ export default function AdminUsersPage() {
                                         className="w-full border-[1.5px] border-[#c3c9e3] rounded-xl px-4 py-2.5 text-sm text-[#3a3f5c] outline-none focus:border-[#3b497e] bg-white cursor-pointer"
                                         disabled={editSaving}>
                                         <option value="admin">Admin</option>
-                                        <option value="super_admin">Super Admin</option>
+                                        <option value="superadmin">Super Admin</option>
                                     </select>
                                 </div>
                             </div>

@@ -520,6 +520,7 @@ export default function ProfilePage() {
       await client.post("user/logout").catch(() => { });
     } finally {
       document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       toast.success("Signed out successfully");
       router.push("/login");
     }

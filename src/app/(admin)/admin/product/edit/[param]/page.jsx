@@ -254,6 +254,7 @@ export default function EditProductPage({ params }) {
                         <div>
                             <label className="text-xs font-semibold text-[#2a3460] block mb-1.5">Room *</label>
                             <Select
+                                instanceId="edit-select-room"
                                 options={roomOptions}
                                 value={roomOptions.find(o => o.value === formData.roomId) || null}
                                 onChange={(s) => setFormData(prev => ({ ...prev, roomId: s?.value || "" }))}
@@ -263,6 +264,7 @@ export default function EditProductPage({ params }) {
                         <div>
                             <label className="text-xs font-semibold text-[#2a3460] block mb-1.5">Category *</label>
                             <Select
+                                instanceId="edit-select-category"
                                 options={categoryOptions}
                                 value={categoryOptions.find(o => o.value === formData.categoryId) || null}
                                 onChange={(s) => setFormData(prev => ({ ...prev, categoryId: s?.value || "" }))}
@@ -296,6 +298,7 @@ export default function EditProductPage({ params }) {
                         <div>
                             <label className="text-xs font-semibold text-[#2a3460] block mb-1.5">Color</label>
                             <Select
+                                instanceId="edit-select-color"
                                 options={colorOptions}
                                 value={colorOptions.find(o => o.value === formData.color) || null}
                                 onChange={(s) => setFormData(prev => ({ ...prev, color: s?.value || "" }))}

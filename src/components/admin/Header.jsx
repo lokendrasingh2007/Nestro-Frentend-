@@ -163,7 +163,7 @@ export default function Header() {
           >
             <FaBell className="text-gray-700" />
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-red-500 rounded-full text-white text-[10px] font-bold flex items-center justify-center px-1">
+              <span className="absolute -top-1 -right-1 min-w-4.5 h-4.5  bg-red-500 rounded-full text-white text-[10px] font-bold flex items-center justify-center px-1">
                 {unreadCount > 9 ? "9+" : unreadCount}
               </span>
             )}

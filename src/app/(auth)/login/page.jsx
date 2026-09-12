@@ -110,7 +110,7 @@ export default function LoginPage() {
           email: "",
           password: ""
         });
-        if (role === "admin" || role === "super_admin") {
+        if (role === "admin" || role === "superadmin") {
           router.push("/admin");
         } else {
           router.push("/");

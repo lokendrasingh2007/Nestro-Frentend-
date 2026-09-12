@@ -6,26 +6,27 @@ const AUTH_ROUTES = ['/login', '/register', '/verify-otp', '/forgot-password'];
 export function proxy(request) {
     const { pathname } = request.nextUrl;
     const token = request.cookies.get('jwt')?.value || null;
-    const role = request.cookies.get('role')?.value || null;
+    const role  = request.cookies.get('role')?.value || null;
 
     // Bina login ke protected pages nahi kholne denge
     if (PROTECTED_ROUTES.includes(pathname) && !token) {
         return NextResponse.redirect(new URL('/login', request.url));
     }
-    // Admin panel - sirf admin/super_admin access kar sakte hai
-    if (pathname.startsWith("/admin")) {
+
+    // Admin panel - sirf admin/superadmin access kar sakte hain
+    if (pathname.startsWith('/admin')) {
         if (!token) {
             return NextResponse.redirect(new URL('/login', request.url));
         }
-
-        if (role !== "admin" && role !== "super_admin") {
+        if (role !== 'admin' && role !== 'superadmin') {
             return NextResponse.redirect(new URL('/login', request.url));
         }
     }
 
+    // Logged-in user ko auth pages pe jaane se rokna
     if (AUTH_ROUTES.includes(pathname) && token) {
-            return NextResponse.redirect(new URL('/', request.url));
-        }
+        return NextResponse.redirect(new URL('/', request.url));
+    }
 }
 
 export const config = {
@@ -36,6 +37,6 @@ export const config = {
         '/register',
         '/verify-otp',
         '/forgot-password',
-        "/admin/:path*",
+        '/admin/:path*',
     ],
 };
