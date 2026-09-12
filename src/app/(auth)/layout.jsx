@@ -66,7 +66,7 @@ export default function RootLayout({ children }) {
                 Nestro <span className="text-[#C6A27E]">.</span>
               </div>
             </Link>
-            <div className="text-center mb-6">
+            {/* <div className="text-center mb-6">
               <Image
                 src="/selles/table.png"
                 alt="Login Image"
@@ -75,7 +75,7 @@ export default function RootLayout({ children }) {
                 className="mx-auto w-32 sm:w-40 lg:w-44"
                 priority
               />
-            </div>
+            </div> */}
             <div className="text-[22px] sm:text-[26px] lg:text-[28px] font-normal text-center tracking-[-0.02em] leading-tight text-[#FAF7F4] mb-3">
               Your
               <em className="text-[#D6BFA7]"> Dream Home</em>
