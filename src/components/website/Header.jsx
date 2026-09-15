@@ -157,9 +157,10 @@ function SearchBar() {
 }
 
 // ── Main Header ───────────────────────────────────────────────────────────────
-export default function Header({ user }) {
+export default function Header({ user: userProp }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSearch, setMobileSearch]     = useState('');
+  const [user, setUser]                     = useState(userProp || null);
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
   const closeMobileMenu  = () => setMobileMenuOpen(false);
   const pathname = usePathname();
@@ -168,12 +169,27 @@ export default function Header({ user }) {
   const cartItems = useSelector((state) => state.cart?.items || []);
   const [mounted, setMounted] = useState(false);
 
+  // Client-side mein bhi user fetch karo — server cookie issue bypass
+  useEffect(() => {
+    const token = document.cookie
+      .split('; ')
+      .find(r => r.startsWith('jwt='))
+      ?.split('=')[1];
+
+    if (token && !user) {
+      client.get('user/profile')
+        .then(res => { if (res.data.success) setUser(res.data.user); })
+        .catch(() => {});
+    }
+    // Agar cookie nahi hai toh user null set karo
+    if (!token) setUser(null);
+  }, [pathname]); // pathname change par re-run karo (login ke baad)
+
   useEffect(() => {
     dispatch(lsToCart());
     setMounted(true);
   }, [dispatch]);
 
-  if (!user) user = { firstName: null };
   const displayName = user?.firstName || '';
 
   const handleMobileSearch = (e) => {

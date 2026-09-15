@@ -62,6 +62,9 @@ export default function LoginPage() {
          document.cookie = `jwt=${token}; ${cookieOptions}`;
         document.cookie = `role=${role}; ${cookieOptions}`;
 
+        // User info localStorage mein save karo
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+
         // Sync local cart with server, then fetch populated cart
         try {
           await client.post("cart/syns-cart", {
