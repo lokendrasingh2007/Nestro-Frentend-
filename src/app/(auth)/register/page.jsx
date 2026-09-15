@@ -37,7 +37,8 @@ export default function SignupPage() {
 
     try {
       setLoading(true);
-      const response = await client.post("user/register", formData);
+      const { agreeTerms, receiveOffers, ...apiData } = formData;
+      const response = await client.post("user/register", apiData);
 
       if (response.data.success) {
         toast.success(response.data.message);
