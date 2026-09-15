@@ -53,6 +53,15 @@ export default function LoginPage() {
       if (response.data.success) {
         toast.success("Login successful!");
 
+        // Token manually cookie mein set karo (cross-site ke liye)
+
+        const token = response.data.token;
+        const role  = response.data.user?.role;
+        const maxAge = 7 * 24 * 60 * 60; // 7 days in seconds
+        const cookieOptions = `max-age=${maxAge}; path=/; SameSite=Lax`;
+         document.cookie = `jwt=${token}; ${cookieOptions}`;
+        document.cookie = `role=${role}; ${cookieOptions}`;
+
         // Sync local cart with server, then fetch populated cart
         try {
           await client.post("cart/syns-cart", {
@@ -105,11 +114,7 @@ export default function LoginPage() {
           console.log("Cart sync error:", cartErr);
         }
 
-        const role = response.data.user?.role;
-        setFormData({
-          email: "",
-          password: ""
-        });
+        setFormData({ email: "", password: "" });
         if (role === "admin" || role === "superadmin") {
           router.push("/admin");
         } else {
