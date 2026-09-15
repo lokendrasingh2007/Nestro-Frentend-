@@ -201,7 +201,7 @@ export default function Header() {
                       {/* Content */}
                       <div className="flex-1 min-w-0">
                         <div className="text-[13px] font-semibold text-gray-800">{notif.title}</div>
-                        <div className="text-[11px] text-gray-500 mt-0.5 leading-[1.5]">{notif.body}</div>
+                        <div className="text-[11px] text-gray-500 mt-0.5 leading-normal">{notif.body}</div>
                         <div className="text-[10px] text-gray-400 mt-1">{timeStr(notif.time)}</div>
                       </div>
                       {/* Unread dot */}
